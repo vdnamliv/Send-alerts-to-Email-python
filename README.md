@@ -1,5 +1,5 @@
 # Send-alerts-to-Email-python
-##Cách sử dụng module:
+## Cách sử dụng module:
 1. Config lại trong email_config.ini
 - Change "your_gmail" and "your_app_password", if don't know how to create app password, go [here](https://myaccount.google.com/apppasswords?pli=1&rapt=AEjHL4OVlHBZyIzfrw29E_Q4mYB5-Ei_wmrnL7Bw5Mvr51ST_6r9yfNADQL6wxYkdzGYKzB5DULwwhRcJaOEfKjloUDyhUbRCHUonLcj99aCP6EDXzOBBFM)
 2. Tạo instance của EmailAlert
