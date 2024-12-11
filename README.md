@@ -1,14 +1,18 @@
 # Send-alerts-to-Email-python
 ## Cách sử dụng module:
-1. Config lại trong email_config.ini
-- Change "your_gmail" and "your_app_password", if don't know how to create app password, go [here](https://myaccount.google.com/apppasswords?pli=1&rapt=AEjHL4OVlHBZyIzfrw29E_Q4mYB5-Ei_wmrnL7Bw5Mvr51ST_6r9yfNADQL6wxYkdzGYKzB5DULwwhRcJaOEfKjloUDyhUbRCHUonLcj99aCP6EDXzOBBFM)
+1. Các thông tin cần thiết
+- If don't know how to create app password, go [here](https://myaccount.google.com/apppasswords?pli=1&rapt=AEjHL4OVlHBZyIzfrw29E_Q4mYB5-Ei_wmrnL7Bw5Mvr51ST_6r9yfNADQL6wxYkdzGYKzB5DULwwhRcJaOEfKjloUDyhUbRCHUonLcj99aCP6EDXzOBBFM)
 2. Tạo instance của EmailAlert
 Ví dụ:
 ```
 from email_alert import EmailAlert
 
-email_alert = EmailAlert(config_path="email_config.ini")
-
+    email_alert = EmailAlert(
+        alert_email="recipient@example.com",
+        smtp_user="your_email@example.com",
+        smtp_password="your_password"
+    )
+    email_alert.send_email_alert("Test Alert", "This is a test message.")
 ```
 3. Sử dụng phương thức send_email_alert để gửi thông báo:
 Ví dụ:
@@ -27,6 +31,8 @@ Please investigate immediately.
 email_alert.send_email_alert(subject, message)
 
 ```
+4. Sử dụng email_config.ini (OPTIONAL)
+- Thay đổi mã nguồn đoạn: ```def __init__(self, config_path="email_config.ini")```
 ## Demo project cần gửi ALert từ database:
 ```
 import sqlite3
