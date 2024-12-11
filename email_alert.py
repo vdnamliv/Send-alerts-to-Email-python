@@ -1,7 +1,6 @@
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-import configparser
 import logging
 
 class EmailAlert:
@@ -9,52 +8,58 @@ class EmailAlert:
     A reusable module for sending alert emails.
 
     Usage:
-    1. Create an `email_config.ini` file with the following structure:
-       [email]
-       alert_email = recipient@example.com
-       smtp_server = smtp.example.com
-       smtp_port = 587
-       smtp_user = your_email@example.com
-       smtp_password = your_password
+    1. Initialize the `EmailAlert` class with email parameters:
+       email_alert = EmailAlert(
+           alert_email="recipient@example.com",
+           smtp_user="your_email@example.com",
+           smtp_password="your_password",
+           smtp_server="smtp.example.com",  # Optional, default is smtp.example.com
+           smtp_port=587  # Optional, default is 587
+       )
 
-    2. Initialize the `EmailAlert` class with the path to the config file:
-       email_alert = EmailAlert(config_path="email_config.ini")
-
-    3. Use the `send_email_alert` method to send an alert:
+    2. Use the `send_email_alert` method to send an alert:
        email_alert.send_email_alert(subject="Alert Subject", message="Your alert message here.")
 
     Example:
     ```
     from email_alert import EmailAlert
 
-    email_alert = EmailAlert(config_path="email_config.ini")
+    email_alert = EmailAlert(
+        alert_email="recipient@example.com",
+        smtp_user="your_email@example.com",
+        smtp_password="your_password"
+    )
     email_alert.send_email_alert("Test Alert", "This is a test message.")
     ```
     """
 
-    def __init__(self, config_path="email_config.ini"):
+    def __init__(
+        self, 
+        alert_email,
+        smtp_user,
+        smtp_password,
+        smtp_server="smtp.example.com",
+        smtp_port=587
+    ):
         """
-        Initialize the EmailAlert class with configuration from the provided file.
-        
-        Args:
-            config_path (str): Path to the email configuration file. Default is "email_config.ini".
-        """
-        self.config = configparser.ConfigParser()
-        self.config.read(config_path)
+        Initialize the EmailAlert class with provided email parameters.
 
-        try:
-            self.alert_email = self.config.get("email", "alert_email")
-            self.smtp_server = self.config.get("email", "smtp_server")
-            self.smtp_port = int(self.config.get("email", "smtp_port"))
-            self.smtp_user = self.config.get("email", "smtp_user")
-            self.smtp_password = self.config.get("email", "smtp_password")
-        except configparser.Error as e:
-            logging.error("Failed to load email configuration: %s", e)
-            raise
+        Args:
+            alert_email (str): Recipient's email address.
+            smtp_user (str): SMTP username (sender's email address).
+            smtp_password (str): SMTP password.
+            smtp_server (str): SMTP server address. Default is "smtp.example.com".
+            smtp_port (int): SMTP server port. Default is 587.
+        """
+        self.alert_email = alert_email
+        self.smtp_server = smtp_server
+        self.smtp_port = smtp_port
+        self.smtp_user = smtp_user
+        self.smtp_password = smtp_password
 
     def send_email_alert(self, subject, message):
         """
-        Send an alert email using the configuration.
+        Send an alert email using the provided configuration.
 
         Args:
             subject (str): Subject line of the email.
